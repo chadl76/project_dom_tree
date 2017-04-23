@@ -2,13 +2,13 @@ require 'pry'
 #sets constants of regex searches
 TYPE_REGEX = /^<(\w)+/
 CLASS_REGEX = /class='([\w\s]*)'/
-ID_REGEX = /id='([\w\s]*)/
-NAME_REGEX = /name='([\w\s]*)/
+ID_REGEX = /id='([\w\s]*)'/
+NAME_REGEX = /name='([\w\s]*)'/
 
 #set up of Tag struct
-Node = Struct.new(:type, :classes, :id, :name, :children, :parent)
+Node = Struct.new(:type, :classes, :id, :name, :text, :children, :parent)
 #string to be parsed
-html_string = "<div> class='foo bar' id='baz' name='fozzie'</div>"
+html_string = "<div>div text before<p>p text</p><div>more div text</div>div text after</div>"
 
 
 def parse_tag(str)
@@ -21,7 +21,7 @@ def parse_tag(str)
 	#finds name
 	name = str.match(NAME_REGEX)
 	#call outputter method 
-	outputter(type, classes, id, name)
+	outputter(type, classes, id, name, text)
 	
 end
 
